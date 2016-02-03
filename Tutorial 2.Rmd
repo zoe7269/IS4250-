@@ -1,0 +1,32 @@
+---
+title: "Tutorial2"
+author: "Lin Jiao"
+date: "29 January 2016"
+output: html_document
+---
+
+```{r}
+labs <- read.csv("~/Desktop/Sem1_15/IS4250 Healthcare Analytics/Tutorials/labs.csv")
+View(labs)
+
+summary(labs$WaitTime)
+hist(labs$WaitTime, main = "Histogram for Waiting Time", xlab = "WaitTime in Minutes", col = "orange", breaks = 16)
+
+mytable <- table(labs$WaitTime)
+pie(mytable)
+
+summary(labs$SvcSat)
+labs$rateSvcSat[labs$SvcSat == "Y"] <- 1
+labs$rateSvcSat[labs$SvcSat == "N"] <- 0
+hist(labs$rateSvcSat, main = "Histogram for Service Satisfaction", xlab = "Service Satisfaction Rate", col = "orange")
+
+ServiceSatisfaction <- table(labs$SvcSat)
+pie(ServiceSatisfaction)
+
+plot(labs$Gender, labs$SvcSat)
+plot(labs$SvcSat,labs$AGE)
+
+labs$GenderInValue[labs$Gender == "M"] <- 1
+labs$GenderInValue[labs$Gender == "F"] <- 0
+summary(lm(labs$rateSvcSat~labs$GenderInValue+labs$AGE))
+
