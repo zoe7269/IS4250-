@@ -1,0 +1,56 @@
+---
+title: "Tutorial3"
+author: "Lin Jiao"
+date: "10 February 2016"
+output: html_document
+---
+
+```{r, echo=FALSE}
+#Question(C)
+library("ggplot2", lib.loc="/Library/Frameworks/R.framework/Versions/3.2/Resources/library")
+library("dplyr", lib.loc="/Library/Frameworks/R.framework/Versions/3.2/Resources/library")
+
+#import Dataset
+labs <- read.csv("~/Desktop/Sem1_15/IS4250 Healthcare Analytics/Tutorials/labs.csv")
+attach(labs)
+
+plot(SvcSat, WaitTime)
+
+SvcSat_factor <- factor(SvcSat)
+levels(SvcSat_factor) <- c("No", "Yes")
+
+not_satisfied <- SvcSat_factor == "No"
+satisfied <- SvcSat_factor == "Yes"
+
+avg_wait_time_not_stfd <- mean(WaitTime[not_satisfied])
+avg_wait_time_stfd <- mean(WaitTime[satisfied])
+
+print(avg_wait_time_not_stfd)
+print(avg_wait_time_stfd)
+
+#Question(D)
+BMI <- WT / (HT^2)
+cholesterol <- as.numeric(levels(TC))[TC]
+summary(lm(BMI ~ cholesterol))
+plot(cholesterol, BMI, main="Correlation BMI and Cholesterol") + abline(lm(BMI ~ cholesterol), col="red")
+
+#Question(E)
+plot(BMI, AGE) + abline(lm(AGE ~ BMI), col="red")
+summary(lm(BMI~AGE))
+
+plot(BMI, SBP) + abline(lm(SBP ~ BMI), col="red")
+summary(lm(BMI~SBP))
+
+ggplot(labs, aes(ETHNIC, BMI)) + geom_boxplot()
+summary(lm(BMI~ETHNIC))
+
+ggplot(labs, aes(Gender, BMI)) + geom_boxplot()
+summary(lm(BMI~Gender))
+
+cholesterol <- as.numeric(levels(TC))[TC]
+summary(lm(BMI~cholesterol + AGE + SBP))
+
+print(6.57521 + 0.03994 * 135 + 0.05948 * 150)
+
+```
+
