@@ -1,0 +1,23 @@
+---
+title: "Tutorial4"
+author: "Lin Jiao"
+date: "10 February 2016"
+output: html_document
+---
+
+```{r}
+rnames <- c("Good", "Poor")
+cnames <- c("Present", "Absent")
+tut4_data <- matrix(c(3,7,4,2), nrow = 2, ncol = 2, byrow = TRUE, dimnames = list(rnames, cnames))
+tut4_data
+
+barplot(tut4_data, beside = T, legend.text = T)
+
+complication_rate_good <- tut4_data[1,1] / sum(tut4_data[1,1:2])
+complication_rate_poor <- tut4_data[2,1] / sum(tut4_data[1,1:2])
+print(complication_rate_good)
+print(complication_rate_poor)
+
+fisher.test(tut4_data, alternative = "two.sided")
+
+```
